@@ -13,7 +13,9 @@ public class Process {
     private int turnaroundTime;
     private int responseTime;
 
-    public Process(String processId, int arrivalTime, int burstTime) {
+    private int priority;
+
+    public Process(String processId, int arrivalTime, int burstTime, int priority) {
 
         if (processId == null || processId.trim().isEmpty()) {
             throw new IllegalArgumentException(
@@ -33,10 +35,15 @@ public class Process {
             );
         }
 
+        if (priority <= 0) {
+            throw new IllegalArgumentException("Priority must be greater than zero");
+        }
+
         this.processId = processId;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.remainingTime = burstTime;
+        this.priority = priority;
     }
 
     // Getters
@@ -75,6 +82,8 @@ public class Process {
     public int getResponseTime() {
         return responseTime;
     }
+
+    public int getPriority() { return priority; }
 
     // Setters
     public void setRemainingTime(int remainingTime) {
@@ -141,6 +150,15 @@ public class Process {
         }
 
         this.responseTime = responseTime;
+    }
+
+    public void setPriority(int priority) {
+        if (priority <= 0) {
+            throw new IllegalArgumentException(
+            "Priority must be greater than zero");
+        }
+
+        this.priority = priority;
     }
 
     // Reset process before running a new simulation
